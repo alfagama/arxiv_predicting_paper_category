@@ -13,5 +13,3 @@
 ----------------------------------------------------
 **Dataset**:
 [ArXiv](https://www.kaggle.com/Cornell-University/arxiv)
-
-Predicting a Scientific Paper category with advanced machine learning techniques involving class imbalance in multi-label data and explainable machine learning.
