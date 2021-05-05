@@ -1,9 +1,3 @@
-# AML_Project
-
-
-
-
-
 # ArXiv - Predicting Scientific Paper Category
 ----------------------------------------------------
 ## MSc Data & Web Science, Aristotle University of Thessaloniki (AUTH)
