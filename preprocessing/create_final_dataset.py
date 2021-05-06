@@ -5,13 +5,13 @@ pd.set_option('display.max_columns', None)
 pd.set_option('display.max_rows', None)
 
 
-def get_data():
+def create_csv():
     """
     creates cs+math+eess+stat.csv from ArXiv_dataset.csv
     :return: -
     """
     # reads data/ArXiv_dataset.csv
-    data_set = pd.read_csv("data/ArXiv_dataset.csv",
+    data_set = pd.read_csv("../data/ArXiv_dataset.csv",
                            sep=',',
                            header=0,
                            skiprows=0)
@@ -19,7 +19,7 @@ def get_data():
     # Drop columns
     drop_columns = ['authors_parsed', 'comments', 'id', 'journal-ref', 'license', 'report-no', 'submitter']
     data_set = data_set.drop(drop_columns, axis=1)
-    # print(data_set.head(5))
+    print(data_set.head(5))
 
     # define pattern for subjects to keep
     pattern_to_keep = "(^|\W)cs\.+|math\.+|eess\.+|stat\.+"
@@ -40,6 +40,9 @@ def get_data():
     keep_multilabel = data_set['categories'].str.contains(' ')
     data_set = data_set[keep_multilabel]
 
+    # -------------------------------------
+    # print final data_set rows by category
+    # -----
     # sort categories
     data_set['categories'] = data_set['categories'].apply(lambda x: ' '.join(sorted(x.split())))
 
@@ -48,6 +51,12 @@ def get_data():
 
     # print .value_counts of final dataset
     print(data_set['categories'].value_counts(ascending=True))
+    # -------------------------------------
 
     # export csv
     data_set.to_csv('data/dataset.csv')
+
+    print(data_set.head(5))
+
+
+create_csv()
