@@ -1,18 +1,12 @@
 import pandas as pd
-import re
 import nltk
-import demoji
-from datetime import datetime
-from collections import Counter
-from pymongo import MongoClient
 from nltk import pos_tag
 from nltk.corpus import stopwords
-from nltk.stem import PorterStemmer
 from nltk.stem import WordNetLemmatizer
-from nltk.stem.snowball import SnowballStemmer
 from nltk.tokenize.treebank import TreebankWordDetokenizer
 from preprocessing.dictionaries import *
 
+# download wordnet from nltk library
 nltk.download('wordnet')
 
 # Options for pandas -----
