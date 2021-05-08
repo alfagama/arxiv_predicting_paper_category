@@ -13,7 +13,7 @@ def get_dataset():
     :return: dataset (dataframe)
     """
     # reads data/preprocessed_dataset.csv
-    df = pd.read_csv("data/preprocessed_dataset.csv",
+    df = pd.read_csv("../data/preprocessed_dataset.csv",
                      sep=',',
                      header=0,
                      skiprows=0)
