@@ -6,7 +6,6 @@ import matplotlib.pyplot as plt
 pd.set_option('display.max_columns', None)
 pd.set_option('display.max_rows', None)
 
-
 def tf_idf():
     """
     creates tfidf_dataset.csv from new_dataset.csv
