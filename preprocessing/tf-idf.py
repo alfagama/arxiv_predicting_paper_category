@@ -21,6 +21,8 @@ def tf_idf():
     num_cols = data_set._get_numeric_data().columns
 
     categorical_col = list(set(cols) - set(num_cols))
+    #Delete 'categories' column because we don't want to convert it to tf-idf
+    categorical_col.remove('categories')
     print(categorical_col)
 
     #Perform tf-idf for all categorical columns
