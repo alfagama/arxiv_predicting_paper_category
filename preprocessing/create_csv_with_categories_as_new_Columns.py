@@ -42,5 +42,3 @@ def create_csv_with_categories_as_new_Columns():
     # export csv
     data_set.to_csv('../data/category_columns_dataset.csv')
     print(data_set.head(5))
-
-create_csv_with_categories_as_new_Columns()

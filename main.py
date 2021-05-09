@@ -12,7 +12,7 @@ if __name__ == '__main__':
 
     # drop string features
     #
- 
+
     # Oversampling
     # X_oversampling, y_oversampling = oversampling(X, y)
     # split into train and test sets

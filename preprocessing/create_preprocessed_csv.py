@@ -126,7 +126,3 @@ def preprocess():
 
     # create preprocessed_dataset.csv
     df_pre.to_csv('../data/preprocessed_conc_dataset.csv')
-
-
-# call method to initialize the pre-processing process
-preprocess()

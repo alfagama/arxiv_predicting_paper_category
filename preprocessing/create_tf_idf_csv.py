@@ -23,9 +23,3 @@ def tf_idf_vectorizer():
 
     train_data.to_csv('../data/train_dataset_tfidf.csv')
     test_data.to_csv('../data/test_dataset_tfidf.csv')
-
-
-
-tf_idf_vectorizer()
-
-

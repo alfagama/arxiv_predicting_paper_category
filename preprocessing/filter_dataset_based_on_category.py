@@ -57,6 +57,3 @@ def create_csv():
     data_set.to_csv('../data/dataset.csv')
 
     print(data_set.head(5))
-
-
-create_csv()

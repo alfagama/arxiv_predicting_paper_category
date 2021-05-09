@@ -44,6 +44,3 @@ def tf_idf():
 
     # export csv
     data_set.to_csv('../data/tfidf_dataset.csv')
-
-
-tf_idf()
