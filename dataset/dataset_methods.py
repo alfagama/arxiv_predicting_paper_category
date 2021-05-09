@@ -58,7 +58,7 @@ def features_and_target(df):
     return X, y
 
 
-def split_test(X, y):
+def split_xy_train_test(X, y):
     """
     Splits X and y into train and test set
     :param X: X -> features (dataframe columns)
@@ -72,7 +72,7 @@ def split_test(X, y):
     return X_train, X_test, y_train, y_test
 
 
-def split_test(df):
+def split_df_train_test(df):
     """
     Splits df into train and test set
     :param df: dataframe
