@@ -11,7 +11,7 @@ def create_csv_with_categories_as_new_Columns():
     :return: -
     """
     # reads data/preprocessed_dataset.csv
-    data_set = pd.read_csv("../data/preprocessed_dataset.csv",
+    data_set = pd.read_csv("../data/preprocessed_conc_dataset.csv",
                            sep=',',
                            header=0,
                            skiprows=0)
