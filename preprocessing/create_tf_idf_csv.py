@@ -12,17 +12,26 @@ def tf_idf_vectorizer():
     :return: -
     """
 
-    data = get_preprocessed_dataset()  # get preprcosessed dataset
+    data = get_preprocessed_dataset()#.head(200)  # get preprcosessed dataset
     train_data, test_data = split_df_train_test(data)  # train test split
 
     text_col = 'pre_abstract' #tochange
 
     tfidf = TfidfVectorizer(max_features=3000)  # min_df=10, out of memory exception when max_features=4000
-    train_data[text_col + 'tfidf'] = tfidf.fit_transform(train_data[text_col])
-    test_data[text_col + 'tfidf'] = tfidf.transform(test_data[text_col])
+    result = tfidf.fit_transform(train_data[text_col].values.astype('U'))
+    train_data[text_col + '_tfidf'] = list(result.toarray())  # Save the result in the new column
+
+    result2 = tfidf.transform(test_data[text_col].values.astype('U'))
+    test_data[text_col + '_tfidf'] = list(result2.toarray()) # Save the result in the new column
 
     train_data.to_csv('../data/train_dataset_tfidf.csv')
     test_data.to_csv('../data/test_dataset_tfidf.csv')
+
+
+    #print tf idf scores (just for checking)
+    df = pd.DataFrame(result[0].T.todense(), index=tfidf.get_feature_names(), columns=["TF-IDF"])
+    df = df.sort_values('TF-IDF', ascending=False)
+    print(df.head(25))
 
 
 
