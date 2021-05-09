@@ -75,7 +75,7 @@ ok_stop_words = {'not'
                  }
 
 # Unwanted tokens to be removed
-unwated_tokens = {'st', 'nd', 'rd'
+unwated_tokens = {'st', 'nd', 'rd', 'lambda', 'alpha',
                   }
 
 # Positive Emoticons
