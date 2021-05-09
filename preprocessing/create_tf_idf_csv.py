@@ -1,6 +1,6 @@
 from sklearn.feature_extraction.text import TfidfVectorizer
 import pandas as pd
-from dataset.dataset import get_preprocessed_dataset, split_test
+from dataset.dataset_methods import get_preprocessed_dataset, split_df_train_test
 
 # Options for pandas -----
 pd.set_option('display.max_columns', None)
@@ -13,7 +13,7 @@ def tf_idf_vectorizer():
     """
 
     data = get_preprocessed_dataset()  # get preprcosessed dataset
-    train_data, test_data = split_test(data)  # train test split
+    train_data, test_data = split_df_train_test(data)  # train test split
 
     text_col = 'pre_abstract' #tochange
 

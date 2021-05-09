@@ -1,5 +1,5 @@
 from Imbalanced.imbalance_methods import *
-from dataset.dataset import *
+from dataset.dataset_methods import *
 
 if __name__ == '__main__':
     # get dataset
@@ -21,6 +21,6 @@ if __name__ == '__main__':
     # Undersampling
     X_undersampling, y_undersampling = undersampling(X, y)
     # split into train and test sets
-    X_train, X_test, y_train, y_test = split_test(X_undersampling, y_undersampling)
+    X_train, X_test, y_train, y_test = split_xy_train_test(X_undersampling, y_undersampling)
 
 
