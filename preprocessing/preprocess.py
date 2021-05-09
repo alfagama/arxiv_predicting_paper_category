@@ -113,8 +113,19 @@ def preprocess():
     df['pre_title'] = df.apply(lambda x: clear_column(x.title), axis=1)
     # print(df_preprocessed.head(5))
 
+    # create preprocessed dataframe's columns
+    df_pre = pd.DataFrame()
+    # abstract
+    df_pre['abstract'] = df['pre_abstract']
+    # title
+    df_pre['title'] = df['pre_title']
+    # abstract + title
+    df_pre['concatenation'] = df[['pre_title', 'pre_abstract']].agg(' '.join, axis=1)
+    # categories <- target
+    df_pre['categories'] = df['categories']
+
     # create preprocessed_dataset.csv
-    df.to_csv('../data/preprocessed_dataset.csv')
+    df_pre.to_csv('../data/preprocessed_conc_dataset.csv')
 
 
 # call method to initialize the pre-processing process
