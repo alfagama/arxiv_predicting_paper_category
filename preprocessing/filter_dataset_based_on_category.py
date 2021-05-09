@@ -53,6 +53,12 @@ def create_csv():
     print(data_set['categories'].value_counts(ascending=True))
     # -------------------------------------
 
+    # keep only if category starts wiht cs.
+    # data_set = data_set['categories'].map(lambda x: x.startswith('cs.'))
+    data_set = data_set[data_set['categories'].str.match('cs.')]
+    # dataFrame[dataFrame['column name'].str.match('string')]
+    print(data_set['categories'].value_counts(ascending=True))
+
     # export csv
     data_set.to_csv('../data/dataset.csv')
 

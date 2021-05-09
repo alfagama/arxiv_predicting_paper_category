@@ -17,7 +17,7 @@ def tf_idf_vectorizer():
 
     text_col = 'concatenation'  # tochange
     print(train_data[text_col].values.astype('U'))
-    tfidf = TfidfVectorizer(max_features=3000)  # min_df=10, out of memory exception when max_features=4000
+    tfidf = TfidfVectorizer(max_features=10000)  # min_df=10, out of memory exception when max_features=4000
     train_encodings = tfidf.fit_transform(train_data[text_col].values.astype('U'))
     train_data[text_col + '_tfidf'] = list(train_encodings.toarray())  # Save the result in the new column
 
