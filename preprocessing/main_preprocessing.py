@@ -1,7 +1,7 @@
-from preprocessing.filter_dataset_based_on_category import *
-from preprocessing.create_preprocessed_csv import *
-from preprocessing.create_csv_with_categories_as_new_Columns import *
-from preprocessing.create_tf_idf_csv import *
+from preprocessing.filter_dataset_based_on_category import create_csv
+from preprocessing.create_preprocessed_csv import preprocess
+from preprocessing.create_csv_with_categories_as_new_Columns import create_csv_with_categories_as_new_Columns
+from preprocessing.create_tf_idf_csv import tf_idf_vectorizer
 
 import os
 import errno
@@ -39,7 +39,7 @@ def run_dataset_creation_process():
         pass
     else:
         # from preprocessing.create_tf_idf_csv
-        tf_idf_vectorizer() 
+        tf_idf_vectorizer()
 
 
 run_dataset_creation_process()
