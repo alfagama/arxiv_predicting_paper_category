@@ -1,5 +1,5 @@
-from imbalance_methods import *
-from dataset import *
+from Imbalanced.imbalance_methods import *
+from dataset.dataset import *
 
 if __name__ == '__main__':
     # get dataset
