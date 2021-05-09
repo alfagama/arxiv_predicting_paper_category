@@ -20,6 +20,13 @@ def tf_idf():
     cols = data_set.columns
     num_cols = data_set._get_numeric_data().columns
 
+    print(cols)
+    # Remove all columns between column index 0 to 3
+    data_set.drop(data_set.iloc[:, 0:3], inplace=True, axis=1)
+    data_set.drop(['doi'], inplace=True, axis=1)
+    cols = data_set.columns
+    print(cols)
+
     categorical_col = list(set(cols) - set(num_cols))
     #Delete 'categories' column because we don't want to convert it to tf-idf
     categorical_col.remove('categories')
@@ -33,7 +40,7 @@ def tf_idf():
         # Save the result in the already existing column
         data_set[x] = list(result.toarray())
 
-    print(data_set.head(5))
+    print(data_set.head(1))
 
     # export csv
     data_set.to_csv('../data/tfidf_dataset.csv')
