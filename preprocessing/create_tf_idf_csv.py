@@ -32,9 +32,3 @@ def tf_idf_vectorizer():
     df = pd.DataFrame(train_encodings[0].T.todense(), index=tfidf.get_feature_names(), columns=["TF-IDF"])
     df = df.sort_values('TF-IDF', ascending=False)
     print(df.head(25))
-
-
-
-tf_idf_vectorizer()
-
-
