@@ -39,7 +39,7 @@ def run_dataset_creation_process():
         pass
     else:
         # from preprocessing.create_tf_idf_csv
-        tf_idf_vectorizer()
+        tf_idf_vectorizer() 
 
 
 run_dataset_creation_process()
