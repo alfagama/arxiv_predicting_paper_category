@@ -10,7 +10,7 @@ def create_csv_with_categories_as_new_Columns():
     creates category_columns_dataset.csv from preprocessed_dataset.csv
     :return: -
     """
-    # reads data/ArXiv_dataset.csv
+    # reads data/preprocessed_dataset.csv
     data_set = pd.read_csv("../data/preprocessed_dataset.csv",
                            sep=',',
                            header=0,
