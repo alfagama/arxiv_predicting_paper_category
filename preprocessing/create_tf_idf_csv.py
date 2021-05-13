@@ -1,6 +1,6 @@
 from sklearn.feature_extraction.text import TfidfVectorizer
 import pandas as pd
-from dataset.dataset_methods import get_preprocessed_dataset, split_df_train_test
+from dataset.dataset_methods_changed_by_me import get_preprocessed_dataset, split_df_train_test
 
 # Options for pandas -----
 pd.set_option('display.max_columns', None)
@@ -32,3 +32,12 @@ def tf_idf_vectorizer():
     df = pd.DataFrame(train_encodings[0].T.todense(), index=tfidf.get_feature_names(), columns=["TF-IDF"])
     df = df.sort_values('TF-IDF', ascending=False)
     print(df.head(25))
+
+    df = pd.DataFrame(train_encodings[1].T.todense(), index=tfidf.get_feature_names(), columns=["TF-IDF"])
+    df = df.sort_values('TF-IDF', ascending=False)
+    print(df.head(25))
+
+    df = pd.DataFrame(train_encodings[2].T.todense(), index=tfidf.get_feature_names(), columns=["TF-IDF"])
+    df = df.sort_values('TF-IDF', ascending=False)
+    print(df.head(25))
+
