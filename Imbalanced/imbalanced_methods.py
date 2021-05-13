@@ -14,7 +14,6 @@ def print_counter(y, message):
     print(message, counter)
     print(" ")
 
-
 def read_and_sample_data():
     # reads data/category_columns_dataset.csv
     dataset = pd.read_csv("../data/category_columns_dataset.csv",
