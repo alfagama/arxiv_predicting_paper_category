@@ -24,7 +24,7 @@ class TextRegenerator(object):
                 for l in s.lemmas():
                     synonyms.append(l.name())
 
-        # if there are no synonyms, put the original word in
+        # if there are no synonyms, put the original word in!
         synonyms.append(word)
         return self.uniq(synonyms)
 
