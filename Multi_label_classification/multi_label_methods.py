@@ -18,6 +18,7 @@ def LabelPowerset(x_train, y_train, x_test, y_test):
     lp_classifier.fit(x_train, y_train)
     lp_predictions = lp_classifier.predict(x_test)
 
+    print("Label Powerset evaluation:")
     print("Accuracy = ", accuracy_score(y_test, lp_predictions))
     print("F1 score = ", f1_score(y_test, lp_predictions, average="micro"))
     print("Hamming loss = ", hamming_loss(y_test, lp_predictions))
@@ -28,6 +29,7 @@ def BinaryRelevance(x_train, y_train, x_test, y_test):
     br_classifier.fit(x_train, y_train)
     br_predictions = br_classifier.predict(x_test)
 
+    print("Binary Relevance evaluation:")
     print("Accuracy = ", accuracy_score(y_test, br_predictions.toarray()))
     print("F1 score = ", f1_score(y_test, br_predictions, average="micro"))
     print("Hamming loss = ", hamming_loss(y_test, br_predictions))
@@ -38,6 +40,7 @@ def ClassifierChains(x_train, y_train, x_test, y_test):
     classifier.fit(x_train, y_train)
     predictions = classifier.predict(x_test)
 
+    print("Classifier Chains evaluation:")
     print("Accuracy = ", accuracy_score(y_test, predictions.toarray()))
     print("F1 score = ", f1_score(y_test, predictions, average="micro"))
     print("Hamming loss = ", hamming_loss(y_test, predictions))
