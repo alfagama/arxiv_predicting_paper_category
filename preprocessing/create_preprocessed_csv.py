@@ -93,6 +93,7 @@ def preprocess():
                      sep=',',
                      header=0,
                      skiprows=0)
+    
     # print(data_set.head(5))
     # drop_columns = ['id']
     # df = df.drop(drop_columns, axis=1)
@@ -126,3 +127,27 @@ def preprocess():
 
     # create preprocessed_dataset.csv
     df_pre.to_csv('../data/preprocessed_conc_dataset.csv')
+
+
+def preprocess_generated(df):
+    """
+
+    :return: -
+    """
+    #   We set all words to lower-case
+    df.loc[:, "concatenation"] = df.concatenation.apply(lambda x: str.lower(x))
+    # print(df.head(5))
+
+    # call clear_column method for abstract
+    df['pre_concatenation'] = df.apply(lambda x: clear_column(x.concatenation), axis=1)
+    # print(df_preprocessed.head(5))
+
+    # create preprocessed dataframe's columns
+    df_pre = pd.DataFrame()
+    # concatenation
+    df_pre['concatenation'] = df['pre_concatenation']
+    # categories <- target
+    df_pre['categories'] = df['categories']
+
+    # create preprocessed_dataset.csv
+    df_pre.to_csv('../data/preprocessed_generated_synonyms.csv')
