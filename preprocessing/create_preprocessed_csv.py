@@ -93,7 +93,7 @@ def preprocess():
                      sep=',',
                      header=0,
                      skiprows=0)
-    
+
     # print(data_set.head(5))
     # drop_columns = ['id']
     # df = df.drop(drop_columns, axis=1)
