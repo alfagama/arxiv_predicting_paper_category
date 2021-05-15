@@ -1,11 +1,9 @@
-from Imbalanced.imbalance_methods import *
-from dataset.dataset_methods_changed_by_me import *
+from sklearn.model_selection import train_test_split
 from skmultilearn.problem_transform import LabelPowerset
-from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import f1_score
 from sklearn.metrics import accuracy_score
 from sklearn.metrics import hamming_loss
-import numpy as np
+import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
 from skmultilearn.problem_transform import BinaryRelevance
 from sklearn.naive_bayes import GaussianNB
@@ -13,34 +11,34 @@ from skmultilearn.problem_transform import ClassifierChain
 from sklearn.linear_model import LogisticRegression
 
 
-def LabelPowerset(x_train, y_train, x_test, y_test):
+def LabelPowersetClassification():
     lp_classifier = LabelPowerset(LogisticRegression())
     lp_classifier.fit(x_train, y_train)
     lp_predictions = lp_classifier.predict(x_test)
 
-    print("Label Powerset evaluation:")
+    print("\nLabel Powerset evaluation:")
     print("Accuracy = ", accuracy_score(y_test, lp_predictions))
     print("F1 score = ", f1_score(y_test, lp_predictions, average="micro"))
     print("Hamming loss = ", hamming_loss(y_test, lp_predictions))
 
 
-def BinaryRelevance(x_train, y_train, x_test, y_test):
+def BinaryRelevanceClassification():
     br_classifier = BinaryRelevance(GaussianNB())
     br_classifier.fit(x_train, y_train)
     br_predictions = br_classifier.predict(x_test)
 
-    print("Binary Relevance evaluation:")
+    print("\nBinary Relevance evaluation:")
     print("Accuracy = ", accuracy_score(y_test, br_predictions.toarray()))
     print("F1 score = ", f1_score(y_test, br_predictions, average="micro"))
     print("Hamming loss = ", hamming_loss(y_test, br_predictions))
 
 
-def ClassifierChains(x_train, y_train, x_test, y_test):
+def ClassifierChainsClassification():
     classifier = ClassifierChain(LogisticRegression())
     classifier.fit(x_train, y_train)
     predictions = classifier.predict(x_test)
 
-    print("Classifier Chains evaluation:")
+    print("\nClassifier Chains evaluation:")
     print("Accuracy = ", accuracy_score(y_test, predictions.toarray()))
     print("F1 score = ", f1_score(y_test, predictions, average="micro"))
     print("Hamming loss = ", hamming_loss(y_test, predictions))
@@ -80,8 +78,7 @@ if __name__ == '__main__':
                                       key=lambda x: x[1], reverse=True)[:40])
 
 
-
-    LabelPowerset(x_train, y_train, x_test, y_test)
-    BinaryRelevance(x_train, y_train, x_test, y_test)
-    ClassifierChains(x_train, y_train, x_test, y_test)
+    LabelPowersetClassification()
+    BinaryRelevanceClassification()
+    #ClassifierChainsClassification()
 

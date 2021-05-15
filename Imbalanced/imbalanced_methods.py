@@ -107,13 +107,14 @@ def oversampling_methods(X,y):
     return X_smote, y_smote, X_bsmote, y_bsmote
 
 
-# Main
-dataset = read_and_sample_data()
-train_data, test_data = tf_idf(dataset)
+if __name__ == '__main__':
+    # Main
+    dataset = read_and_sample_data()
+    train_data, test_data = tf_idf(dataset)
 
-y = train_data.categories
-X = train_data.concatenation_tfidf.to_list()
+    y = train_data.categories
+    X = train_data.concatenation_tfidf.to_list()
 
-X_TomekLinks, y_TomekLinks,X_ClusterCentroids, y_ClusterCentroids= undersampling_methods(X,y)
-X_smote, y_smote, X_bsmote, y_bsmote = oversampling_methods(X,y)
+    X_TomekLinks, y_TomekLinks,X_ClusterCentroids, y_ClusterCentroids = undersampling_methods(X,y)
+    X_smote, y_smote, X_bsmote, y_bsmote = oversampling_methods(X,y)
 
