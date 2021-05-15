@@ -70,7 +70,7 @@ df_cslg_statml_16230 = df[df['categories'] == 'cs.lg stat.ml']
 df_csit_mathit_19580 = df[df['categories'] == 'cs.it math.it']
 # list.append(df_csit_mathit_19580) # do not add this to list -> no need to generate new rows
 
-# # .
+# # ..
 # print(list)
 
 # create Object from class TextRegenerator

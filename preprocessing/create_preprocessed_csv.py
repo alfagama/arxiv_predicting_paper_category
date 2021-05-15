@@ -130,7 +130,7 @@ def preprocess():
 
 def preprocess_generated(df):
     """
-
+    
     :return: -
     """
     #   We set all words to lower-case

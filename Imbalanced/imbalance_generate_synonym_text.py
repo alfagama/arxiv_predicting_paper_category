@@ -29,8 +29,10 @@ class TextRegenerator(object):
         return self.uniq(synonyms)
 
     def createPhraseSynonyms(self, _str_base):
-        """Finds synonyms for every word in the input. Returns a list, containing a
-        list of synonyms for every word in the input."""
+        """
+        Finds synonyms for every word in the input. Returns a list, containing a
+        list of synonyms for every word in the input.
+        """
 
         tokenizer = RegexpTokenizer('\w+|\$[\d\.]+|\S+')
         tokens = tokenizer.tokenize(_str_base)
@@ -56,7 +58,9 @@ class TextRegenerator(object):
 
         output = []
 
-        """Determine which token has the most phrase_synonyms."""
+        """
+        Determine which token has the most phrase_synonyms.
+        """
         longest = ""
         for item in phrase_synonyms:
             if len(item) > len(longest):
@@ -64,8 +68,10 @@ class TextRegenerator(object):
 
         # Loop for each synonym in 'longest' list.
         for i in range(len(longest)):
-            """Build a new phrase using the first word of each list, then remove
-               that word, unless it is the last one."""
+            """
+            Build a new phrase using the first word of each list, then remove
+               that word, unless it is the last one.
+            """
 
             phrase = ""
             for s in phrase_synonyms:
@@ -79,7 +85,8 @@ class TextRegenerator(object):
     def generateStrVariations(self, _str_base):
 
         """Generates variations (through synonym matching) of an inputted string, ignoring
-           list of stop words."""
+           list of stop words.
+        """
 
         print('\n\tNow generating variations of: "' + _str_base + '"..')
 
@@ -95,7 +102,8 @@ class TextRegenerator(object):
     def addStopWords(self, l_param):
 
         """Takes in a 'string' (enclosed in quotes, and meant to be typed as a list of words separated
-           by commas and spaces) to parse and append to the stop (ignored) words."""
+           by commas and spaces) to parse and append to the stop (ignored) words.
+        """
         try:
             l_param = l_param.lower().split(', ')
         except:
