@@ -45,16 +45,16 @@ def ClassifierChainsClassification():
 
 
 if __name__ == '__main__':
-
     # read data
-    df = pd.read_csv("../data/category_columns_dataset.csv",
+    # df = pd.read_csv("../data/category_columns_dataset.csv",
+    # df = pd.read_csv("../data/category_columns_preprocessed_generated_synonyms.csv",
+    df = pd.read_csv("../data/generated_shuffled_20categories_nostopwords.csv",
                      sep=',',
                      header=0,
-                     skiprows=0).head(400)
+                     skiprows=0)
 
     # train test split
     train, test = train_test_split(df, random_state=42, test_size=0.30, shuffle=True)
-
 
     # Tf idf vectorizer
     # ----------------------------------------------------------
@@ -68,17 +68,15 @@ if __name__ == '__main__':
     x_test = vectorizer.transform(test_text)  # .toarray()
     # ----------------------------------------------------------
 
-    y_train = train.drop(labels=['abstract', 'title', 'concatenation', 'categories', 'Unnamed: 0', 'Unnamed: 0.1'],
+    y_train = train.drop(labels=['concatenation', 'categories', 'Unnamed: 0', 'Unnamed: 0.1'],
                          axis=1)
-    y_test = test.drop(labels=['abstract', 'title', 'concatenation', 'categories', 'Unnamed: 0', 'Unnamed: 0.1'],
+    y_test = test.drop(labels=['concatenation', 'categories', 'Unnamed: 0', 'Unnamed: 0.1'],
                        axis=1)
 
     print('tf_idf scores: \n', sorted(list(zip(vectorizer.get_feature_names(),
                                                x_train.sum(0).getA1())),
                                       key=lambda x: x[1], reverse=True)[:40])
 
-
     LabelPowersetClassification()
     BinaryRelevanceClassification()
-    #ClassifierChainsClassification()
-
+    # ClassifierChainsClassification()
