@@ -13,3 +13,27 @@
 ----------------------------------------------------
 **Dataset**:
 [ArXiv](https://www.kaggle.com/Cornell-University/arxiv)
+
+----------------------------------------------------
+**Imbalance**:
+
+*Oversampling*:
+- SMOTE
+- Generate Synonym Text
+
+*Undersampling*:
+- Tomek Links
+- Random Undersampling
+
+**Multi-label Classification**:
+- LabelPowersetClassification()
+- BinaryRelevanceClassification()
+- ...
+
+**Interpretability / Explainability**:
+
+*White Box*:
+- ..
+
+*Black Box*:
+- ..
