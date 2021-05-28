@@ -12,8 +12,8 @@ def create_csv_with_categories_as_new_Columns():
     :return: -
     """
     # reads data/preprocessed_dataset.csv
-    # data_set = pd.read_csv("../data/preprocessed_conc_dataset.csv",
-    data_set = pd.read_csv("../data/random_undersampled.csv",
+    data_set = pd.read_csv("../data/preprocessed_conc_dataset.csv",
+    # data_set = pd.read_csv("../data/random_undersampled.csv",
                            sep=',',
                            header=0,
                            skiprows=0)
@@ -42,8 +42,8 @@ def create_csv_with_categories_as_new_Columns():
         data_set[x] = contains.astype(int)
 
     # export csv
-    # data_set.to_csv('../data/category_columns_dataset.csv')
-    data_set.to_csv('../data/random_undersampled_20.csv')
+    data_set.to_csv('../data/category_columns_dataset.csv')
+    # data_set.to_csv('../data/random_undersampled_20.csv')
     print(data_set.head(5))
 
 
