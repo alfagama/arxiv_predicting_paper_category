@@ -49,6 +49,7 @@ if __name__ == '__main__':
     # df = pd.read_csv("../data/category_columns_dataset.csv",
     # df = pd.read_csv("../data/category_columns_preprocessed_generated_synonyms.csv",
     df = pd.read_csv("../data/generated_shuffled_20categories_nostopwords.csv",
+    # df = pd.read_csv("../data/random_undersampled_20.csv",
                      sep=',',
                      header=0,
                      skiprows=0)
@@ -68,15 +69,61 @@ if __name__ == '__main__':
     x_test = vectorizer.transform(test_text)  # .toarray()
     # ----------------------------------------------------------
 
-    y_train = train.drop(labels=['concatenation', 'categories', 'Unnamed: 0', 'Unnamed: 0.1'],
+    # drop all other labels apart from target
+    y_train = train.drop(labels=['concatenation',
+                                 'categories',
+                                 'Unnamed: 0',
+                                 'Unnamed: 0.1'
+                                 ],
                          axis=1)
-    y_test = test.drop(labels=['concatenation', 'categories', 'Unnamed: 0', 'Unnamed: 0.1'],
+    y_test = test.drop(labels=['concatenation',
+                               'categories',
+                               'Unnamed: 0',
+                               'Unnamed: 0.1'
+                               ],
                        axis=1)
 
+    # transform Y label to array
+    y_train = y_train.to_numpy()
+    y_test = y_test.to_numpy()
+
+    # print tf-idf scores
     print('tf_idf scores: \n', sorted(list(zip(vectorizer.get_feature_names(),
                                                x_train.sum(0).getA1())),
                                       key=lambda x: x[1], reverse=True)[:40])
 
+    # call Multi-label Classification methods
+    print(x_train)
+    print(x_test)
+    print(len(y_train))
+    print(len(y_test))
     LabelPowersetClassification()
     BinaryRelevanceClassification()
-    # ClassifierChainsClassification()
+    ClassifierChainsClassification()
+
+# Label Powerset evaluation:
+# Accuracy =  0.6006666666666667
+# F1 score =  0.8239459518046172
+# Hamming loss =  0.04060833333333334
+#
+# Binary Relevance evaluation:
+# Accuracy =  0.16633333333333333
+# F1 score =  0.6453200354319084
+# Hamming loss =  0.09009166666666667
+
+
+# Label Powerset evaluation:
+# Accuracy =  0.6006666666666667
+# F1 score =  0.8239459518046172
+# Hamming loss =  0.04060833333333334
+#
+# Binary Relevance evaluation:
+# Accuracy =  0.16633333333333333
+# F1 score =  0.6453200354319084
+# Hamming loss =  0.09009166666666667
+#
+# Classifier Chains evaluation:
+# Accuracy =  0.5515
+# F1 score =  0.7997667043341959
+# Hamming loss =  0.045775
+
