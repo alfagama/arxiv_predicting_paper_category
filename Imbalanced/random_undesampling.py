@@ -17,7 +17,9 @@ df = df.drop('Unnamed: 0', 1)
 
 # print head
 print(df.head(5))
-# print(len(df))  # 75876
+
+# print(len(df))
+# 75876
 
 # A limitation of undersampling is that examples from the majority class are deleted that may be useful, important,
 # or perhaps critical to fitting a robust decision boundary. Given that examples are deleted randomly, there is no
