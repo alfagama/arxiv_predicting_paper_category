@@ -26,9 +26,9 @@
 - Random Undersampling
 
 **Multi-label Classification**:
-- LabelPowersetClassification()
-- BinaryRelevanceClassification()
-- ...
+- LabelPowerset
+- BinaryRelevance
+- ClassifierChain
 
 **Interpretability / Explainability**:
 
