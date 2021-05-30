@@ -11,7 +11,7 @@ from skmultilearn.problem_transform import ClassifierChain
 from sklearn.linear_model import LogisticRegression
 
 
-def LabelPowersetClassification():
+def LabelPowersetClassification(x_train, x_test, y_train, y_test):
     lp_classifier = LabelPowerset(LogisticRegression())
     lp_classifier.fit(x_train, y_train)
     lp_predictions = lp_classifier.predict(x_test)
@@ -22,7 +22,7 @@ def LabelPowersetClassification():
     print("Hamming loss = ", hamming_loss(y_test, lp_predictions))
 
 
-def BinaryRelevanceClassification():
+def BinaryRelevanceClassification(x_train, x_test, y_train, y_test):
     br_classifier = BinaryRelevance(GaussianNB())
     br_classifier.fit(x_train, y_train)
     br_predictions = br_classifier.predict(x_test)
@@ -33,7 +33,7 @@ def BinaryRelevanceClassification():
     print("Hamming loss = ", hamming_loss(y_test, br_predictions))
 
 
-def ClassifierChainsClassification():
+def ClassifierChainsClassification(x_train, x_test, y_train, y_test):
     classifier = ClassifierChain(LogisticRegression())
     classifier.fit(x_train, y_train)
     predictions = classifier.predict(x_test)
@@ -104,6 +104,6 @@ if __name__ == '__main__':
     print(x_test)
     print(len(y_train))
     print(len(y_test))
-    LabelPowersetClassification()
-    BinaryRelevanceClassification()
-    ClassifierChainsClassification()
+    LabelPowersetClassification(x_train, x_test, y_train, y_test)
+    BinaryRelevanceClassification(x_train, x_test, y_train, y_test)
+    ClassifierChainsClassification(x_train, x_test, y_train, y_test)
