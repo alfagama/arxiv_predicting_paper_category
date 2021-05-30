@@ -100,30 +100,3 @@ if __name__ == '__main__':
     LabelPowersetClassification()
     BinaryRelevanceClassification()
     ClassifierChainsClassification()
-
-# Label Powerset evaluation:
-# Accuracy =  0.6006666666666667
-# F1 score =  0.8239459518046172
-# Hamming loss =  0.04060833333333334
-#
-# Binary Relevance evaluation:
-# Accuracy =  0.16633333333333333
-# F1 score =  0.6453200354319084
-# Hamming loss =  0.09009166666666667
-
-
-# Label Powerset evaluation:
-# Accuracy =  0.6006666666666667
-# F1 score =  0.8239459518046172
-# Hamming loss =  0.04060833333333334
-#
-# Binary Relevance evaluation:
-# Accuracy =  0.16633333333333333
-# F1 score =  0.6453200354319084
-# Hamming loss =  0.09009166666666667
-#
-# Classifier Chains evaluation:
-# Accuracy =  0.5515
-# F1 score =  0.7997667043341959
-# Hamming loss =  0.045775
-
