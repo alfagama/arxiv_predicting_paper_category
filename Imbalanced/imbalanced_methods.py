@@ -3,11 +3,12 @@ from collections import Counter
 from imblearn.under_sampling import TomekLinks
 from sklearn.feature_extraction.text import TfidfVectorizer
 from dataset.dataset_methods import split_df_train_test
-from imblearn.under_sampling import ClusterCentroids
+from imblearn.under_sampling import ClusterCentroids, NearMiss, RandomUnderSampler
 from imblearn.over_sampling import BorderlineSMOTE, SMOTE, ADASYN, SMOTENC, RandomOverSampler
-
-
+from imblearn.combine import SMOTETomek
+from imblearn.pipeline import make_pipeline
 # from imblearn.ensemble import EasyEnsemble
+from Multi_label_classification.multi_label_methods import *
 
 
 def print_counter(y, message):
@@ -25,7 +26,7 @@ def read_and_sample_data():
                           skiprows=0)
     print('Dataset size is: ', dataset.size)
     # Sample my dataset
-    my_dataset = dataset.sample(n=10000, replace=True, random_state=42)
+    my_dataset = dataset.sample(n=1000, replace=True, random_state=42)
     print('Sampled dataset size is: ', my_dataset.size)
 
     # return dataset;
@@ -72,6 +73,14 @@ def undersampling_methods(X, y):
     # ta kanei undersampling OLA kai kataligoume na exoume apo kathe katigoria n_samples= number of minority class
     # -------------------------------------------
 
+    # Random Under Sampler
+    # -------------------------------------------
+    print_counter(y, 'Before Random Under Sampler undersampling')
+    rus = RandomUnderSampler(random_state=777)
+    X_RUS, y_RUS = rus.fit_resample(X, y)
+    print_counter(y_RUS, 'After Random Under Sampler undersampling')
+    # -------------------------------------------
+
     """
     # EasyEnsemble
     # -------------------------------------------
@@ -81,67 +90,106 @@ def undersampling_methods(X, y):
     print_counter(y_ensemble, 'After EasyEnsemble undersampling')
     # -------------------------------------------
     """
+    return X_TomekLinks, y_TomekLinks, X_ClusterCentroids, y_ClusterCentroids, X_RUS, y_RUS;  # , X_ensemble, y_ensemble;
 
-    return X_TomekLinks, y_TomekLinks, X_ClusterCentroids, y_ClusterCentroids  # , X_ensemble, y_ensemble;
+
+def undersampling_NearMiss_methods(X, y):
+    # NearMiss-1
+    # -------------------------------------------
+    print_counter(y, 'Before NearMiss-1 undersampling')
+    nm = NearMiss(sampling_strategy='not minority', version=1, n_neighbors=1)  # random_state=777,
+    X_nm, y_nm = nm.fit_resample(X, y)
+    print_counter(y_nm, 'After NearMiss-1 undersampling')
+    # -------------------------------------------
+
+    # NearMiss-2
+    # -------------------------------------------
+    print_counter(y, 'Before NearMiss-2 undersampling')
+    nm2 = NearMiss(sampling_strategy='not minority', version=2, n_neighbors=1)
+    X_nm2, y_nm2 = nm2.fit_resample(X, y)
+    print_counter(y_nm2, 'After NearMiss-2 undersampling')
+    # -------------------------------------------
+
+    # NearMiss-3
+    # -------------------------------------------
+    print_counter(y, 'Before NearMiss-3 undersampling')
+    nm3 = NearMiss(sampling_strategy='not minority', version=3, n_neighbors_ver3=4)
+    X_nm3, y_nm3 = nm3.fit_resample(X, y)
+    print_counter(y_nm3, 'After NearMiss-3 undersampling')
+    # -------------------------------------------
+
+    return X_nm, y_nm, X_nm2, y_nm2, X_nm3, y_nm3
 
 
 def oversampling_methods(X, y):
     # SMOTE
     # -------------------------------------------
-    print_counter(y, 'Before SMOTE undersampling')
+    print_counter(y, 'Before SMOTE oversampling')
     sm = SMOTE()
     X_smote, y_smote = sm.fit_resample(X, y)
 
-    print_counter(y_smote, 'After SMOTE undersampling')
+    print_counter(y_smote, 'After SMOTE oversampling')
     # -------------------------------------------
 
     # Borderline SMOTE
     # -------------------------------------------
-    print_counter(y, 'Before Borderline SMOTE undersampling')
+    print_counter(y, 'Before Borderline SMOTE oversampling')
     b_sm = BorderlineSMOTE()
     X_bsmote, y_bsmote = b_sm.fit_resample(X, y)
 
-    print_counter(y_bsmote, 'After Borderline SMOTE undersampling')
+    print_counter(y_bsmote, 'After Borderline SMOTE oversampling')
     # -------------------------------------------
 
-    return X_smote, y_smote, X_bsmote, y_bsmote
+    # Random Over Sampler
+    # -------------------------------------------
+    print_counter(y, 'Before Random Over Sampler oversampling')
+    ros = RandomOverSampler(random_state=777)
+    X_ROS, y_ROS = ros.fit_resample(X, y)
+    print_counter(y_ROS, 'After Random Over Sampler oversampling')
+    # -------------------------------------------
+
+    return X_smote, y_smote, X_bsmote, y_bsmote, X_ROS, y_ROS
 
 
-def undersample_dfs(X_TomekLinks, y_TomekLinks, X_ClusterCentroids, y_ClusterCentroids):
+def combination_methods(X, y):
+    # SMOTE + Tomek Links
+    # -------------------------------------------
+    print_counter(y, 'Before SMOTE/Tomek Links undersampling')
+    smTomek = SMOTETomek(tomek=TomekLinks(sampling_strategy='majority'))
+    X_smoteTomek, y_smoteTomek = smTomek.fit_resample(X, y)
 
-    save_df = pd.DataFrame()
-
-    save_df.to_csv('../data/undersample_tomeklinks.csv')
-    save_df.to_csv('../data/undersample_clustercentroids.csv')
-
-
-def oversample_dfs(X_smote, y_smote, X_bsmote, y_bsmote):
-
-    save_df = pd.DataFrame()
-
-    save_df.to_csv('../data/oversample_smote.csv')
-    save_df.to_csv('../data/oversample_bsmote.csv')
+    return X_smoteTomek, y_smoteTomek;
 
 
 if __name__ == '__main__':
-    # Main
     dataset = read_and_sample_data()
     train_data, test_data = tf_idf(dataset)
 
     y = train_data.categories
-    print(type(y))
-    print(y.head(5))
     X = train_data.concatenation_tfidf.to_list()
-    print(type(X))
-    print(X)
 
-    test = pd.DataFrame()
-    test = y
-    test['X_values'] = X
-    test.to_csv('../data/test.csv')
+    # Call undersampling methods
+    # -------------------------------------------
+    X_TomekLinks, y_TomekLinks, X_ClusterCentroids, y_ClusterCentroids, X_RUS, y_RUS = undersampling_methods(X, y)
+    #############################################################
+    print("running")
+    X_train, X_test, y_train, y_test = train_test_split(X_TomekLinks, y_TomekLinks, test_size=0.3, random_state=42)
+    print(type(X_train))
+    print(type(X_test))
+    print(type(y_train))
+    print(type(y_test))
+    # y_train = y_train.to_numpy
+    y_train = y_train.tolist()
+    # y_test = y_test.to_numpy
+    y_test = y_test.tolist()
+    LabelPowersetClassification(X_train, X_test, y_train, y_test)
+    #############################################################
+    X_nm, y_nm, X_nm2, y_nm2, X_nm3, y_nm3 = undersampling_NearMiss_methods(X, y)
 
+    # Call oversampling methods
+    # -------------------------------------------
+    X_smote, y_smote, X_bsmote, y_bsmote, X_ROS, y_ROS = oversampling_methods(X, y)
 
-    X_TomekLinks, y_TomekLinks, X_ClusterCentroids, y_ClusterCentroids = undersampling_methods(X, y)
-    undersample_dfs(X_TomekLinks, y_TomekLinks, X_ClusterCentroids, y_ClusterCentroids)
-    X_smote, y_smote, X_bsmote, y_bsmote = oversampling_methods(X, y)
-    oversample_dfs(X_smote, y_smote, X_bsmote, y_bsmote)
+    # Call combination methods
+    # -------------------------------------------
+    X_smoteTomek, y_smoteTomek = combination_methods(X, y)
