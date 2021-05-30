@@ -48,11 +48,14 @@ if __name__ == '__main__':
     # read data
     # df = pd.read_csv("../data/category_columns_dataset.csv",
     # df = pd.read_csv("../data/category_columns_preprocessed_generated_synonyms.csv",
-    df = pd.read_csv("../data/generated_shuffled_20categories_nostopwords.csv",
+    # df = pd.read_csv("../data/generated_shuffled_20categories_nostopwords.csv",
+    df = pd.read_csv("../data/category_columns_dataset.csv",
     # df = pd.read_csv("../data/random_undersampled_20.csv",
                      sep=',',
                      header=0,
                      skiprows=0)
+
+    print(df.head(5))
 
     # train test split
     train, test = train_test_split(df, random_state=42, test_size=0.30, shuffle=True)
@@ -72,12 +75,16 @@ if __name__ == '__main__':
     # drop all other labels apart from target
     y_train = train.drop(labels=['concatenation',
                                  'categories',
+                                 'abstract',
+                                 'title',
                                  'Unnamed: 0',
                                  'Unnamed: 0.1'
                                  ],
                          axis=1)
     y_test = test.drop(labels=['concatenation',
                                'categories',
+                               'abstract',
+                               'title',
                                'Unnamed: 0',
                                'Unnamed: 0.1'
                                ],
