@@ -94,18 +94,22 @@ if __name__ == '__main__':
     y_train_Tomek_df['categories'] = y_TomekLinks
     y_train_Tomek = create_new_columns_from_df(y_train_Tomek_df)
     y_train_Tomek = y_train_Tomek.drop(labels=['categories'], axis=1)
+    y_train_Tomek = y_train_Tomek.reindex(sorted(y_train_Tomek.columns), axis=1)
+    print(y_train_Tomek.head(2))
     y_train_Tomek = y_train_Tomek.to_numpy()
     # ClusterCentroids
     y_train_CC_df = pd.DataFrame()
     y_train_CC_df['categories'] = y_ClusterCentroids
     y_train_CC = create_new_columns_from_df(y_train_CC_df)
     y_train_CC = y_train_CC.drop(labels=['categories'], axis=1)
+    y_train_CC = y_train_CC.reindex(sorted(y_train_CC.columns), axis=1)
     y_train_CC = y_train_CC.to_numpy()
     # RUS
     y_train_RUS_df = pd.DataFrame()
     y_train_RUS_df['categories'] = y_RUS
     y_train_RUS = create_new_columns_from_df(y_train_RUS_df)
     y_train_RUS = y_train_RUS.drop(labels=['categories'], axis=1)
+    y_train_RUS = y_train_RUS.reindex(sorted(y_train_RUS.columns), axis=1)
     y_train_RUS = y_train_RUS.to_numpy()
 
     # ----------------------------------------------------------
@@ -124,6 +128,9 @@ if __name__ == '__main__':
                                  'Unnamed: 0'
                                  ],
                          axis=1)
+    print(y_test.head(3))
+    y_test = y_test.reindex(sorted(y_test.columns), axis=1)
+    print(y_test.head(3))
     y_test = y_test.to_numpy()
 
     # Tomek MLC
@@ -171,6 +178,7 @@ if __name__ == '__main__':
     y_train_NM1_df['categories'] = y_nm
     y_train_NM1 = create_new_columns_from_df(y_train_NM1_df)
     y_train_NM1 = y_train_NM1.drop(labels=['categories'], axis=1)
+    y_train_NM1 = y_train_NM1.reindex(sorted(y_train_NM1.columns), axis=1)
     y_train_NM1 = y_train_NM1.to_numpy()
 
     # NM2
@@ -178,6 +186,7 @@ if __name__ == '__main__':
     y_train_NM2_df['categories'] = y_nm2
     y_train_NM2 = create_new_columns_from_df(y_train_NM2_df)
     y_train_NM2 = y_train_NM2.drop(labels=['categories'], axis=1)
+    y_train_NM2 = y_train_NM2.reindex(sorted(y_train_NM2.columns), axis=1)
     y_train_NM2 = y_train_NM2.to_numpy()
 
     # NM3
@@ -185,6 +194,7 @@ if __name__ == '__main__':
     y_train_NM3_df['categories'] = y_nm3
     y_train_NM3 = create_new_columns_from_df(y_train_NM3_df)
     y_train_NM3 = y_train_NM3.drop(labels=['categories'], axis=1)
+    y_train_NM3 = y_train_NM3.reindex(sorted(y_train_NM3.columns), axis=1)
     y_train_NM3 = y_train_NM3.to_numpy()
 
     # Tomek MLC
@@ -212,6 +222,35 @@ if __name__ == '__main__':
     ClassifierChainsClassification(X_nm3, x_test, y_train_NM3, y_test)
 
     # ----------------------------------------------------------
+    # COMBINATIONS
+    # ----------------------------------------------------------
+
+    # ----------------------------------------------------------
+    # x_train
+    # ----------------------------------------------------------
+    X_smoteTomek, y_smoteTomek = combination_methods(x_train, y_train)
+
+    # ----------------------------------------------------------
+    # y_train -- NM1
+    # ----------------------------------------------------------
+
+    # y_smoteTomek
+    y_ST_df = pd.DataFrame()
+    y_ST_df['categories'] = y_smoteTomek
+    y_ST = create_new_columns_from_df(y_ST_df)
+    y_ST = y_ST.drop(labels=['categories'], axis=1)
+    y_ST = y_ST.reindex(sorted(y_ST.columns), axis=1)
+    y_ST = y_ST.to_numpy()
+
+    # y_smoteTomek
+    print("")
+    print("y_smoteTomek")
+    print("length of dataset: ", len(y_ST), " + ", len(y_test))
+    LabelPowersetClassification(X_smoteTomek, x_test, y_ST, y_test)
+    BinaryRelevanceClassification(X_smoteTomek, x_test, y_ST, y_test)
+    ClassifierChainsClassification(X_smoteTomek, x_test, y_ST, y_test)
+
+    # ----------------------------------------------------------
     # OVERSAMPLING
     # ----------------------------------------------------------
 
@@ -231,6 +270,7 @@ if __name__ == '__main__':
     y_train_SMOTE_df['categories'] = y_smote
     y_train_SMOTE = create_new_columns_from_df(y_train_SMOTE_df)
     y_train_SMOTE = y_train_SMOTE.drop(labels=['categories'], axis=1)
+    y_train_SMOTE = y_train_SMOTE.reindex(sorted(y_train_SMOTE.columns), axis=1)
     y_train_SMOTE = y_train_SMOTE.to_numpy()
 
     # BSMOTE
@@ -238,6 +278,7 @@ if __name__ == '__main__':
     y_train_BSMOTE_df['categories'] = y_bsmote
     y_train_BSMOTE = create_new_columns_from_df(y_train_BSMOTE_df)
     y_train_BSMOTE = y_train_BSMOTE.drop(labels=['categories'], axis=1)
+    y_train_BSMOTE = y_train_BSMOTE.reindex(sorted(y_train_BSMOTE.columns), axis=1)
     y_train_BSMOTE = y_train_BSMOTE.to_numpy()
 
     # ROS
@@ -245,6 +286,7 @@ if __name__ == '__main__':
     y_train_ROS_df['categories'] = y_ROS
     y_train_ROS = create_new_columns_from_df(y_train_ROS_df)
     y_train_ROS = y_train_ROS.drop(labels=['categories'], axis=1)
+    y_train_ROS = y_train_ROS.reindex(sorted(y_train_ROS.columns), axis=1)
     y_train_ROS = y_train_ROS.to_numpy()
 
     # SMOTE
@@ -270,31 +312,3 @@ if __name__ == '__main__':
     LabelPowersetClassification(X_ROS, x_test, y_train_ROS, y_test)
     BinaryRelevanceClassification(X_ROS, x_test, y_train_ROS, y_test)
     ClassifierChainsClassification(X_ROS, x_test, y_train_ROS, y_test)
-
-    # ----------------------------------------------------------
-    # COMBINATIONS
-    # ----------------------------------------------------------
-
-    # ----------------------------------------------------------
-    # x_train
-    # ----------------------------------------------------------
-    X_smoteTomek, y_smoteTomek = combination_methods(x_train, y_train)
-
-    # ----------------------------------------------------------
-    # y_train -- NM1
-    # ----------------------------------------------------------
-
-    # y_smoteTomek
-    y_ST_df = pd.DataFrame()
-    y_ST_df['categories'] = y_smoteTomek
-    y_ST = create_new_columns_from_df(y_ST_df)
-    y_ST = y_ST.drop(labels=['categories'], axis=1)
-    y_ST = y_ST.to_numpy()
-
-    # y_smoteTomek
-    print("")
-    print("y_smoteTomek")
-    print("length of dataset: ", len(y_ST), " + ", len(y_test))
-    LabelPowersetClassification(X_smoteTomek, x_test, y_ST, y_test)
-    BinaryRelevanceClassification(X_smoteTomek, x_test, y_ST, y_test)
-    ClassifierChainsClassification(X_smoteTomek, x_test, y_ST, y_test)
