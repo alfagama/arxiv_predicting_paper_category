@@ -11,7 +11,7 @@ from skmultilearn.problem_transform import ClassifierChain
 from sklearn.linear_model import LogisticRegression
 
 
-def LabelPowersetClassification():
+def LabelPowersetClassification(x_train, x_test, y_train, y_test):
     lp_classifier = LabelPowerset(LogisticRegression())
     lp_classifier.fit(x_train, y_train)
     lp_predictions = lp_classifier.predict(x_test)
@@ -22,7 +22,7 @@ def LabelPowersetClassification():
     print("Hamming loss = ", hamming_loss(y_test, lp_predictions))
 
 
-def BinaryRelevanceClassification():
+def BinaryRelevanceClassification(x_train, x_test, y_train, y_test):
     br_classifier = BinaryRelevance(GaussianNB())
     br_classifier.fit(x_train, y_train)
     br_predictions = br_classifier.predict(x_test)
@@ -33,7 +33,7 @@ def BinaryRelevanceClassification():
     print("Hamming loss = ", hamming_loss(y_test, br_predictions))
 
 
-def ClassifierChainsClassification():
+def ClassifierChainsClassification(x_train, x_test, y_train, y_test):
     classifier = ClassifierChain(LogisticRegression())
     classifier.fit(x_train, y_train)
     predictions = classifier.predict(x_test)
@@ -48,11 +48,14 @@ if __name__ == '__main__':
     # read data
     # df = pd.read_csv("../data/category_columns_dataset.csv",
     # df = pd.read_csv("../data/category_columns_preprocessed_generated_synonyms.csv",
-    df = pd.read_csv("../data/generated_shuffled_20categories_nostopwords.csv",
+    # df = pd.read_csv("../data/generated_shuffled_20categories_nostopwords.csv",
+    df = pd.read_csv("../data/category_columns_dataset.csv",
     # df = pd.read_csv("../data/random_undersampled_20.csv",
                      sep=',',
                      header=0,
                      skiprows=0)
+
+    print(df.head(5))
 
     # train test split
     train, test = train_test_split(df, random_state=42, test_size=0.30, shuffle=True)
@@ -72,12 +75,16 @@ if __name__ == '__main__':
     # drop all other labels apart from target
     y_train = train.drop(labels=['concatenation',
                                  'categories',
+                                 'abstract',
+                                 'title',
                                  'Unnamed: 0',
                                  'Unnamed: 0.1'
                                  ],
                          axis=1)
     y_test = test.drop(labels=['concatenation',
                                'categories',
+                               'abstract',
+                               'title',
                                'Unnamed: 0',
                                'Unnamed: 0.1'
                                ],
@@ -97,33 +104,6 @@ if __name__ == '__main__':
     print(x_test)
     print(len(y_train))
     print(len(y_test))
-    LabelPowersetClassification()
-    BinaryRelevanceClassification()
-    ClassifierChainsClassification()
-
-# Label Powerset evaluation:
-# Accuracy =  0.6006666666666667
-# F1 score =  0.8239459518046172
-# Hamming loss =  0.04060833333333334
-#
-# Binary Relevance evaluation:
-# Accuracy =  0.16633333333333333
-# F1 score =  0.6453200354319084
-# Hamming loss =  0.09009166666666667
-
-
-# Label Powerset evaluation:
-# Accuracy =  0.6006666666666667
-# F1 score =  0.8239459518046172
-# Hamming loss =  0.04060833333333334
-#
-# Binary Relevance evaluation:
-# Accuracy =  0.16633333333333333
-# F1 score =  0.6453200354319084
-# Hamming loss =  0.09009166666666667
-#
-# Classifier Chains evaluation:
-# Accuracy =  0.5515
-# F1 score =  0.7997667043341959
-# Hamming loss =  0.045775
-
+    LabelPowersetClassification(x_train, x_test, y_train, y_test)
+    BinaryRelevanceClassification(x_train, x_test, y_train, y_test)
+    ClassifierChainsClassification(x_train, x_test, y_train, y_test)
