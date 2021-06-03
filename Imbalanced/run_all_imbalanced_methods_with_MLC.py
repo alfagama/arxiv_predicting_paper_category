@@ -140,6 +140,7 @@ if __name__ == '__main__':
     LabelPowersetClassification(X_TomekLinks, x_test, y_train_Tomek, y_test)
     BinaryRelevanceClassification(X_TomekLinks, x_test, y_train_Tomek, y_test)
     ClassifierChainsClassification(X_TomekLinks, x_test, y_train_Tomek, y_test)
+    MLkNNClassification(X_TomekLinks, x_test, y_train_Tomek, y_test)
 
     # ClusterCentroids MLC
     print("")
@@ -148,6 +149,7 @@ if __name__ == '__main__':
     LabelPowersetClassification(X_ClusterCentroids, x_test, y_train_CC, y_test)
     BinaryRelevanceClassification(X_ClusterCentroids, x_test, y_train_CC, y_test)
     ClassifierChainsClassification(X_ClusterCentroids, x_test, y_train_CC, y_test)
+    MLkNNClassification(X_ClusterCentroids, x_test, y_train_CC, y_test)
 
     # RUS MLC
     print("")
@@ -156,6 +158,7 @@ if __name__ == '__main__':
     LabelPowersetClassification(X_RUS, x_test, y_train_RUS, y_test)
     BinaryRelevanceClassification(X_RUS, x_test, y_train_RUS, y_test)
     ClassifierChainsClassification(X_RUS, x_test, y_train_RUS, y_test)
+    MLkNNClassification(X_RUS, x_test, y_train_RUS, y_test)
 
     # ----------------------------------------------------------
     # UNDERSAMPLING NEAR MISS
@@ -204,6 +207,7 @@ if __name__ == '__main__':
     LabelPowersetClassification(X_nm, x_test, y_train_NM1, y_test)
     BinaryRelevanceClassification(X_nm, x_test, y_train_NM1, y_test)
     ClassifierChainsClassification(X_nm, x_test, y_train_NM1, y_test)
+    MLkNNClassification(X_nm, x_test, y_train_NM1, y_test)
 
     # ClusterCentroids MLC
     print("")
@@ -212,6 +216,7 @@ if __name__ == '__main__':
     LabelPowersetClassification(X_nm2, x_test, y_train_NM2, y_test)
     BinaryRelevanceClassification(X_nm2, x_test, y_train_NM2, y_test)
     ClassifierChainsClassification(X_nm2, x_test, y_train_NM2, y_test)
+    MLkNNClassification(X_nm2, x_test, y_train_NM2, y_test)
 
     # RUS MLC
     print("")
@@ -220,6 +225,7 @@ if __name__ == '__main__':
     LabelPowersetClassification(X_nm3, x_test, y_train_NM3, y_test)
     BinaryRelevanceClassification(X_nm3, x_test, y_train_NM3, y_test)
     ClassifierChainsClassification(X_nm3, x_test, y_train_NM3, y_test)
+    MLkNNClassification(X_nm3, x_test, y_train_NM3, y_test)
 
     # ----------------------------------------------------------
     # COMBINATIONS
@@ -249,6 +255,7 @@ if __name__ == '__main__':
     LabelPowersetClassification(X_smoteTomek, x_test, y_ST, y_test)
     BinaryRelevanceClassification(X_smoteTomek, x_test, y_ST, y_test)
     ClassifierChainsClassification(X_smoteTomek, x_test, y_ST, y_test)
+    MLkNNClassification(X_smoteTomek, x_test, y_ST, y_test)
 
     # ----------------------------------------------------------
     # OVERSAMPLING
@@ -296,6 +303,7 @@ if __name__ == '__main__':
     LabelPowersetClassification(X_smote, x_test, y_train_SMOTE, y_test)
     BinaryRelevanceClassification(X_smote, x_test, y_train_SMOTE, y_test)
     ClassifierChainsClassification(X_smote, x_test, y_train_SMOTE, y_test)
+    MLkNNClassification(X_smote, x_test, y_train_SMOTE, y_test)
 
     # BSMOTE
     print("")
@@ -304,6 +312,7 @@ if __name__ == '__main__':
     LabelPowersetClassification(X_bsmote, x_test, y_train_BSMOTE, y_test)
     BinaryRelevanceClassification(X_bsmote, x_test, y_train_BSMOTE, y_test)
     ClassifierChainsClassification(X_bsmote, x_test, y_train_BSMOTE, y_test)
+    MLkNNClassification(X_bsmote, x_test, y_train_BSMOTE, y_test)
 
     # ROS
     print("")
@@ -312,3 +321,4 @@ if __name__ == '__main__':
     LabelPowersetClassification(X_ROS, x_test, y_train_ROS, y_test)
     BinaryRelevanceClassification(X_ROS, x_test, y_train_ROS, y_test)
     ClassifierChainsClassification(X_ROS, x_test, y_train_ROS, y_test)
+    MLkNNClassification(X_ROS, x_test, y_train_ROS, y_test)
