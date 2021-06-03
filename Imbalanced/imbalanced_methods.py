@@ -26,11 +26,20 @@ def read_and_sample_data():
                           skiprows=0)
     print('Dataset size is: ', dataset.size)
     # Sample my dataset
-    my_dataset = dataset.sample(n=1000, replace=True, random_state=42)
-    print('Sampled dataset size is: ', my_dataset.size)
+    # my_dataset = dataset.sample(n=1000, replace=True, random_state=42)
+    # print('Sampled dataset size is: ', my_dataset.size)
+    print(dataset.head(5))
+    dataset = dataset.drop(labels=['abstract',
+                                   'categories',
+                                   'title',
+                                   'Unnamed: 0',
+                                   'Unnamed: 0.1'
+                                   ],
+                           axis=1)
 
     # return dataset;
-    return my_dataset;
+    # return my_dataset;
+    return dataset
 
 
 def tf_idf(dataset):
@@ -39,7 +48,7 @@ def tf_idf(dataset):
     print(test_data.size)
 
     text_col = 'concatenation'  # tochange
-    print(train_data[text_col].values.astype('U'))
+    # print(train_data[text_col].values.astype('U'))
     tfidf = TfidfVectorizer(max_features=1000)  # min_df=10, out of memory exception when max_features=4000
     train_encodings = tfidf.fit_transform(train_data[text_col].values.astype('U'))
     train_data[text_col + '_tfidf'] = list(train_encodings.toarray())  # Save the result in the new column
@@ -157,6 +166,7 @@ def combination_methods(X, y):
     print_counter(y, 'Before SMOTE/Tomek Links undersampling')
     smTomek = SMOTETomek(tomek=TomekLinks(sampling_strategy='majority'))
     X_smoteTomek, y_smoteTomek = smTomek.fit_resample(X, y)
+    print_counter(y_smoteTomek, 'After SMOTE/Tomek Links undersampling')
 
     return X_smoteTomek, y_smoteTomek;
 
@@ -171,19 +181,7 @@ if __name__ == '__main__':
     # Call undersampling methods
     # -------------------------------------------
     X_TomekLinks, y_TomekLinks, X_ClusterCentroids, y_ClusterCentroids, X_RUS, y_RUS = undersampling_methods(X, y)
-    #############################################################
-    print("running")
-    X_train, X_test, y_train, y_test = train_test_split(X_TomekLinks, y_TomekLinks, test_size=0.3, random_state=42)
-    print(type(X_train))
-    print(type(X_test))
-    print(type(y_train))
-    print(type(y_test))
-    # y_train = y_train.to_numpy
-    y_train = y_train.tolist()
-    # y_test = y_test.to_numpy
-    y_test = y_test.tolist()
-    LabelPowersetClassification(X_train, X_test, y_train, y_test)
-    #############################################################
+
     X_nm, y_nm, X_nm2, y_nm2, X_nm3, y_nm3 = undersampling_NearMiss_methods(X, y)
 
     # Call oversampling methods
