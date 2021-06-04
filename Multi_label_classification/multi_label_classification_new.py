@@ -144,7 +144,7 @@ if __name__ == '__main__':
     # transform Y label to array
     y_train = y_train.to_numpy()
     y_test = y_test.to_numpy()
-
+ 
     # print tf-idf scores
     print('tf_idf scores: \n', sorted(list(zip(vectorizer.get_feature_names(),
                                                x_train.sum(0).getA1())),
