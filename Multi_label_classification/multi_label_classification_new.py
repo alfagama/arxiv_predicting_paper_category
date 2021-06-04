@@ -30,10 +30,10 @@ def LabelPowersetClassification(x_train, x_test, y_train, y_test, classifier):
     lp_predictions = lp_classifier.predict(x_test)
 
     print("Accuracy = ", accuracy_score(y_test, lp_predictions))
-    print("F1 score = ", f1_score(y_test, lp_predictions, average="micro"))
-    print("F1 score = ", f1_score(y_test, lp_predictions, average="macro"))
-    print("F1 score = ", f1_score(y_test, lp_predictions, average="wighted"))
-    print("F1 score = ", f1_score(y_test, lp_predictions, average="sample"))
+    print("F1 score - micro = ", f1_score(y_test, lp_predictions, average="micro"))
+    print("F1 score - macro = ", f1_score(y_test, lp_predictions, average="macro"))
+    print("F1 score - weighted = ", f1_score(y_test, lp_predictions, average="weighted"))
+    print("F1 score - samples = ", f1_score(y_test, lp_predictions, average="samples"))
     print("Hamming loss = ", hamming_loss(y_test, lp_predictions))
 
     stop = time.time()
@@ -51,10 +51,10 @@ def BinaryRelevanceClassification(x_train, x_test, y_train, y_test, classifier):
     br_predictions = br_classifier.predict(x_test)
 
     print("Accuracy = ", accuracy_score(y_test, br_predictions.toarray()))
-    print("F1 score = ", f1_score(y_test, br_predictions, average="micro"))
-    print("F1 score = ", f1_score(y_test, br_predictions, average="macro"))
-    print("F1 score = ", f1_score(y_test, br_predictions, average="wighted"))
-    print("F1 score = ", f1_score(y_test, br_predictions, average="sample"))
+    print("F1 score - micro ", f1_score(y_test, br_predictions, average="micro"))
+    print("F1 score - macro ", f1_score(y_test, br_predictions, average="macro"))
+    print("F1 score - weighted = ", f1_score(y_test, br_predictions, average="weighted"))
+    print("F1 score - samples = ", f1_score(y_test, br_predictions, average="samples"))
     print("Hamming loss = ", hamming_loss(y_test, br_predictions))
 
     stop = time.time()
@@ -72,10 +72,10 @@ def ClassifierChainsClassification(x_train, x_test, y_train, y_test, classifier)
     predictions = classifier.predict(x_test)
 
     print("Accuracy = ", accuracy_score(y_test, predictions.toarray()))
-    print("F1 score = ", f1_score(y_test, predictions, average="micro"))
-    print("F1 score = ", f1_score(y_test, predictions, average="macro"))
-    print("F1 score = ", f1_score(y_test, predictions, average="wighted"))
-    print("F1 score = ", f1_score(y_test, predictions, average="sample"))
+    print("F1 score - micro = ", f1_score(y_test, predictions, average="micro"))
+    print("F1 score - macro = ", f1_score(y_test, predictions, average="macro"))
+    print("F1 score - weighted = ", f1_score(y_test, predictions, average="weighted"))
+    print("F1 score - samples = ", f1_score(y_test, predictions, average="samples"))
     print("Hamming loss = ", hamming_loss(y_test, predictions))
 
     stop = time.time()
@@ -92,7 +92,10 @@ def MLkNNClassification(x_train, x_test, y_train, y_test, nearest_k):
     predictions = classifier.predict(x_test)
 
     print("Accuracy = ", accuracy_score(y_test, predictions.toarray()))
-    print("F1 score = ", f1_score(y_test, predictions, average="micro"))
+    print("F1 score - micro = ", f1_score(y_test, predictions, average="micro"))
+    print("F1 score - macro = ", f1_score(y_test, predictions, average="macro"))
+    print("F1 score - weighted = ", f1_score(y_test, predictions, average="weighted"))
+    print("F1 score - samples = ", f1_score(y_test, predictions, average="samples"))
     print("Hamming loss = ", hamming_loss(y_test, predictions))
 
     stop = time.time()
@@ -144,7 +147,7 @@ if __name__ == '__main__':
     # transform Y label to array
     y_train = y_train.to_numpy()
     y_test = y_test.to_numpy()
- 
+
     # print tf-idf scores
     print('tf_idf scores: \n', sorted(list(zip(vectorizer.get_feature_names(),
                                                x_train.sum(0).getA1())),
@@ -165,4 +168,3 @@ if __name__ == '__main__':
         BinaryRelevanceClassification(x_train, x_test, y_train, y_test, classifier)
         ClassifierChainsClassification(x_train, x_test, y_train, y_test, classifier)
     MLkNNClassification(x_train, x_test, y_train, y_test, k)
-
