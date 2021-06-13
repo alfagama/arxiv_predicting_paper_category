@@ -78,9 +78,9 @@ trgnr = TextRegenerator()
 # loop through list and read one dataframe at a time
 for dataframe_of_list in list:
     # # generate synonyms for this dataframe category based on len(df_cslg_statml_16230) / len(dataframe_of_list)
-    # times_each_row_will_generate_a_synonym = round(len(df_cslg_statml_16230) / len(dataframe_of_list))
+    times_each_row_will_generate_a_synonym = round((len(df_csit_mathit_19580) / len(dataframe_of_list))/2)
     # generate synonyms for this dataframe category based on N number / len(dataframe_of_list)
-    times_each_row_will_generate_a_synonym = round(9000 / len(dataframe_of_list))
+    # times_each_row_will_generate_a_synonym = round(9000 / len(dataframe_of_list))
     # # generate synonyms for this dataframe category based N number
     # times_each_row_will_generate_a_synonym = 5
     # iterate through all dataframe's rows
