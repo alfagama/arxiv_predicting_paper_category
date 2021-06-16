@@ -21,8 +21,11 @@
 ----------------------------------------------------
 **Imbalance**:
 *Oversampling*: SMOTE, Borderline SMOTE, RandomOverSampler
+
 *Undersampling*: Tomek Links, Random Undersampling, NearMiss1, NearMiss2, NearMiss3
+
 *Over&Undersampling*: SMOTE and Tomek Links
+
 *Extra*: Generating Synonym Text
 
 ----------------------------------------------------
