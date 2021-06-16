@@ -207,12 +207,3 @@ if __name__ == '__main__':
         roc_table = pd.DataFrame(columns=['classifiers', 'fpr', 'tpr', 'auc'])
         prec_rec_table = pd.DataFrame(columns=['classifiers', 'pr', 'rec', 'ap'])
 
-
-
-
-
-
-
-
-
-
