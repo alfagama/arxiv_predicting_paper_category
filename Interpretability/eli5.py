@@ -70,7 +70,7 @@ if __name__ == '__main__':
 
     # Count Vectorizer & Logistic Regression ----
     vec = CountVectorizer(max_features=5000)
-    clf = LogisticRegression()
+    clf = LogisticRegression() #LinearSVC()
     pipeline = make_pipeline(vec, clf)
     pipeline.fit(x_train.concatenation, y_train.categories)
     # -------------------------------------------
