@@ -21,42 +21,36 @@ if __name__ == '__main__':
     X = data[['concatenation']]
     y = data[['categories']]
 
-    # Τrain-test Split
-    # -----------------------
+    # Τrain-test Split --------------------------
     x_train, x_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
     print(x_train.shape[0])
     print(y_train.shape[0])
-    # -----------------------
+    # --------------------------------------------
 
-    # Count Vectorizer
-    # -----------------------
+    # Count Vectorizer --------------------------
     vectorizer = CountVectorizer(analyzer='word')
     x_train = vectorizer.fit_transform(x_train['concatenation'])
     x_test = vectorizer.transform(x_test['concatenation'])
-    # -----------------------
+    # --------------------------------------------
 
-    # Linear SVC Classification
-    # -----------------------
+    # Linear SVC Classification -------------------
     model = LinearSVC()
     model.fit(x_train, y_train)
-    # -----------------------
+    # --------------------------------------------
 
-    # Predict on test data
-    # -----------------------
+    # Predict on test data ------------------------
     pred = model.predict(x_test)
-    # -----------------------
+    # --------------------------------------------
 
-    # Evaluation Metrics
-    # -----------------------
+    # Evaluation Metrics --------------------------
     accuracy = accuracy_score(y_test, pred)
     precision = precision_score(y_test, pred, average='weighted')
     recall = recall_score(y_test, pred, average='weighted')
     f1 = f1_score(y_test, pred, average='weighted')
     print("accuracy = %.3f, precision = %.3f, recall = %.3f, f1 = %.3f\n" % (accuracy, precision, recall, f1))
-    # -----------------------
+    # --------------------------------------------
 
-    # SHAP Explainer
-    # -----------------------
+    # SHAP Explainer --------------------------
     explainer = shap.LinearExplainer(model, x_train, feature_dependence="independent")
     shap_values = explainer.shap_values(x_test)
     X_test_array = x_test.toarray() # we need to pass a dense version for the plotting functions
@@ -64,4 +58,4 @@ if __name__ == '__main__':
     fig = shap.summary_plot(shap_values, X_test_array, feature_names=vectorizer.get_feature_names(), class_names=model.classes_, show=False)
     plt.tight_layout()
     plt.savefig('shap_LinearSVC.png')
-    # -----------------------
+    # --------------------------------------------
