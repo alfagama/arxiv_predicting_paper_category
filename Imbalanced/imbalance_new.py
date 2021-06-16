@@ -1,108 +1,21 @@
 import pandas as pd
-from sklearn import preprocessing
-from sklearn.multiclass import OneVsRestClassifier
-#from Imbalanced.imbalanced_methods import *
 from sklearn.linear_model import LogisticRegression
-from sklearn.naive_bayes import GaussianNB
 from sklearn.model_selection import train_test_split
-from sklearn.feature_extraction.text import TfidfVectorizer
 from imblearn.pipeline import Pipeline, make_pipeline
 from imblearn.under_sampling import ClusterCentroids, NearMiss, RandomUnderSampler, TomekLinks
-from imblearn.over_sampling import BorderlineSMOTE, SMOTE, ADASYN, SMOTENC, RandomOverSampler
+from imblearn.over_sampling import BorderlineSMOTE, SMOTE, RandomOverSampler
 from imblearn.combine import SMOTETomek
 from sklearn.metrics import f1_score, balanced_accuracy_score, roc_auc_score, average_precision_score
-from sklearn.decomposition import TruncatedSVD
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.svm import LinearSVC
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.feature_extraction.text import CountVectorizer
-from sklearn.metrics import precision_recall_curve, roc_curve, auc, confusion_matrix
-from yellowbrick.classifier import PrecisionRecallCurve
+from sklearn.metrics import precision_recall_curve, roc_curve
 import numpy as np
-from sklearn.metrics import RocCurveDisplay
-from sklearn.preprocessing import label_binarize
 import matplotlib.pyplot as plt
-import seaborn as sns
-
-def imbalanced_methods(model, modelName):
-    tf_idf = TfidfVectorizer(max_features=10000)
-    """
-    ##########################################################
-    #Undersampling
-
-    # Tomek Links
-    # -------------------------------------------
-    tomekLinks = TomekLinks()
-    print('Results for Tomek Links undersampling')
-    run_pipeline(tf_idf, tomekLinks, model,'TomekLinks',modelName,result_table)
-    # -------------------------------------------
-
-    # ClusterCentroids
-    # -------------------------------------------
-    clusterCent = ClusterCentroids(random_state=0)
-    print('Results for Cluster Centroids undersampling')
-    run_pipeline(tf_idf, clusterCent, model,'ClusterCentroids',modelName,result_table)
-    # ta kanei undersampling OLA kai kataligoume na exoume apo kathe katigoria n_samples= number of minority class
-    # -------------------------------------------
-    
-    """
-
-    # Random Under Sampler
-    # -------------------------------------------
-    rus = RandomUnderSampler(random_state=777)
-    print('Results for Random Under Sampler undersampling')
-    run_pipeline(tf_idf, rus, model,'RandomUnderSampler',modelName)
-    # -------------------------------------------
-
-    # undersampling_NearMiss_methods
-    nm1 = NearMiss(sampling_strategy='not minority', version=1, n_neighbors=1)  # random_state=777,
-    print('Results for NearMiss-1 undersampling')
-    pipe = run_pipeline(tf_idf, nm1, model,'NearMiss1',modelName)
-
-    nm2 = NearMiss(sampling_strategy='not minority', version=2, n_neighbors=1)
-    print('Results for NearMiss-2 undersampling')
-    run_pipeline(tf_idf, nm2, model,'NearMiss2',modelName)
-
-    nm3 = NearMiss(sampling_strategy='not minority', version=3, n_neighbors_ver3=4)
-    print('Results for NearMiss-3 undersampling')
-    run_pipeline(tf_idf, nm3, model,'NearMiss3',modelName)
-
-    ##########################################################
-    # Oversampling
-
-    # SMOTE
-    # -------------------------------------------
-    smote = SMOTE()
-    print('Results for SMOTE oversampling')
-    run_pipeline(tf_idf, smote, model,'SMOTE',modelName)
-    # -------------------------------------------
-
-    # Borderline SMOTE
-    # -------------------------------------------
-    b_sm = BorderlineSMOTE()
-    print('Results for Borderline SMOTE oversampling')
-    run_pipeline(tf_idf, b_sm, model,'BorderlineSMOTE',modelName)
-    # -------------------------------------------
-
-    # Random Over Sampler
-    # -------------------------------------------
-    ros = RandomOverSampler(random_state=777)
-    print('Results for Random Over Sampler oversampling')
-    run_pipeline(tf_idf, ros, model,'RandomOverSampler',modelName)
-    # -------------------------------------------
-
-    ##########################################################
-    # Combination
-
-    # SMOTE + Tomek Links
-    # -------------------------------------------
-    smTomek = SMOTETomek(tomek=TomekLinks(sampling_strategy='majority'))
-    print('Results for SMOTE + Tomek Links')
-    run_pipeline(tf_idf, smTomek, model,'SMOTETomek',modelName)
-
-    return result_table
+import time
 
 def plot_curves(imb,result_table, prec_rec_table):
     # ROC AUC CURVE
@@ -126,7 +39,7 @@ def plot_curves(imb,result_table, prec_rec_table):
 
     plt.title('ROC Curve Analysis', fontweight='bold', fontsize=15)
     plt.legend(prop={'size': 13}, loc='lower right')
-    plt.savefig('../data_pics/'+imb+'_roc.png')
+    #plt.savefig('../data_pics/'+imb+'_roc.png')
     plt.show()
 
     #PRECISION RECALL CURVE
@@ -149,7 +62,7 @@ def plot_curves(imb,result_table, prec_rec_table):
 
     plt.title('Precision vs Recall curve', fontweight='bold', fontsize=15)
     plt.legend(prop={'size': 13}, loc='lower right')
-    plt.savefig('../data_pics/'+imb+'_prec_recall.png')
+    #plt.savefig('../data_pics/'+imb+'_prec_recall.png')
     plt.show()
 
 def run_pipeline(imb,result_table,prec_rec_table):
@@ -166,7 +79,8 @@ def run_pipeline(imb,result_table,prec_rec_table):
     ]
 
     for model in models:
-        pipe = make_pipeline(count_vect, imb, model)
+        pipe = make_pipeline(count_vect,imb,model)
+        start = time.time()
 
         pipe.fit(x_train, y_train)
         y_pred = pipe.predict(x_test)
@@ -174,17 +88,21 @@ def run_pipeline(imb,result_table,prec_rec_table):
             y_pred_prob = pipe.predict_proba(x_test)[:, 1]
         else:
             y_pred_prob = pipe.predict(x_test)
-        # y_pred_prob = pipe.predict_proba(x_test)
+        end = time.time()
 
         print('Results for ' + str(model))
         print('f1 score: ', f1_score(y_test, y_pred, average='macro'))
         print('balanced accuracy score: ', balanced_accuracy_score(y_test, y_pred))
+        print("Time elapsed: ", end - start)  # CPU seconds elapsed (floating point)
+
         # print('ROC AUC score: ', roc_auc_score(y_test, y_pred_prob, multi_class='ovr'))
-        print()
         fpr, tpr, _ = roc_curve(y_test, y_pred_prob)
         auc = roc_auc_score(y_test, y_pred_prob)
         pr, rc, _ = precision_recall_curve(y_test, y_pred_prob)
         average_precision = average_precision_score(y_test, y_pred_prob)
+        print('Roc auc score: ', auc)
+        print('Precision recall score: ', average_precision)
+        print()
 
         prec_rec_table = prec_rec_table.append({'classifiers': model.__class__.__name__,
                                             'pr': pr,
@@ -196,15 +114,6 @@ def run_pipeline(imb,result_table,prec_rec_table):
                                             'tpr': tpr,
                                             'auc': auc}, ignore_index=True)
 
-    """
-    pipe = Pipeline([
-        ('tf_idf', tf_idf),
-        #('count_vec', count_vect),
-        # ('svd', svd),
-        ('imbalanced_method', imb),
-        ('algorithm', model)
-    ])
-    """
     return result_table,prec_rec_table
 
 
@@ -244,7 +153,7 @@ if __name__ == '__main__':
     fig = plt.figure(figsize=(8, 6))
     fig.suptitle('ArXiv Papers - Dataset')
     df.groupby('categories').concatenation.count().plot.bar(ylim=0)
-    plt.savefig('../data_pics/imbalanced_dataset.png')
+    #plt.savefig('../data_pics/imbalanced_dataset.png')
     # plt.show()
     plt.close()
 
@@ -259,17 +168,23 @@ if __name__ == '__main__':
     df_classes = df['categories'].value_counts().rename_axis('Categories').reset_index(name='Row count')
     print(df_classes)
     ax = df_classes.plot.bar(x='Categories', y='Row count', rot=0, title='Categories distribution')
-    ax.figure.savefig('categories_distribution.png')
+    ax.figure.savefig('imbalanced_distr.png')
 
-    #y = label_binarize(y, classes=[*range(n_classes)])
-    #print(y)
 
-    #lb = preprocessing.LabelBinarizer()
-    #y = lb.fit_transform(y)
+    heights = df_classes['Row count']
+    bars = df_classes['Categories']
+    y_pos = range(len(bars))
+    plt.bar(y_pos, heights)
+    plt.xticks(y_pos, bars, rotation=90)
+    plt.ylabel('Row count')
+    plt.legend().remove()
+    plt.grid(False)
+    plt.gcf().subplots_adjust(bottom=0.25)
+    #plt.savefig('synonym_distr.png')
+    plt.show()
 
     x_train, x_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
 
-    """
     imb_methods = [
         RandomUnderSampler(random_state=777),
         NearMiss(sampling_strategy='not minority', version=1, n_neighbors=1),
@@ -282,10 +197,6 @@ if __name__ == '__main__':
         TomekLinks(),
         ClusterCentroids(random_state=0)
     ]
-    """
-    imb_methods = [
-        ClusterCentroids(random_state=0)
-    ]
 
     for imb in imb_methods:
         print('--------------'+ str(imb)+'--------------')
@@ -295,32 +206,6 @@ if __name__ == '__main__':
         plot_curves(str(imb),roc_table, prec_rec_table)
         roc_table = pd.DataFrame(columns=['classifiers', 'fpr', 'tpr', 'auc'])
         prec_rec_table = pd.DataFrame(columns=['classifiers', 'pr', 'rec', 'ap'])
-
-    """
-    lr = LogisticRegression(random_state=0, max_iter=500)
-    print('--------------Results for Logistic Regression--------------')
-    result_table = imbalanced_methods(lr,'LogisticRegression',result_table)
-    print('----------------------------')
-
-    naive_bayes = MultinomialNB()
-    print('--------------Results for Multinomial Naive Bayes--------------')
-    result_table = imbalanced_methods(naive_bayes, 'MultinomialNB',result_table)
-    print('----------------------------')
-
-    #clf = OneVsRestClassifier(RandomForestClassifier(n_estimators=50,
-    #                                                 max_depth=3,
-    #                                                 random_state=0))
-    random_forest = RandomForestClassifier(n_estimators=1000, random_state=42)
-    print('--------------Results for Random Forest Classifier-------------')
-    result_table = imbalanced_methods(random_forest, 'RandomForestClassifier',result_table)
-    print('----------------------------')
-    """
-
-
-
-#svd = TruncatedSVD(n_components=5, n_iter=100, random_state=42)
-
-
 
 
 
